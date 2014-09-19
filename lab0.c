@@ -99,6 +99,8 @@ int main(void)
 	TRISBbits.TRISB13 = 0;
 	TRISBbits.TRISB12 = 0;
 
+	TRISBbits.TRISB5 = 1;
+
 	LATBbits.LATB15 = 1;
 	LATBbits.LATB14 = 1;	
 	LATBbits.LATB13 = 1;
