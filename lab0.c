@@ -101,6 +101,7 @@ int main(void)
 
 	TRISBbits.TRISB5 = 1;
 
+
 	LATBbits.LATB15 = 1;
 	LATBbits.LATB14 = 1;	
 	LATBbits.LATB13 = 1;
@@ -183,7 +184,7 @@ int main(void)
 
 	// Print a message requesting the user to select a LED to toggle.
 	printf("Select LED to Toggle (4-7): ");
-
+	int state=0;
 	// The main loop for your microcontroller should not exit (return), as
 	// the program should run as long as the device is powered on. 
 	while(1)
@@ -212,6 +213,33 @@ int main(void)
 			LATBbits.LATB14 = 1;
 			LATBbits.LATB13 = 1;
 		}
+		switch(state){
+
+			case(0):
+				PR1=14400;
+
+				if ( PORTBbits.RB5 == 0 ) { 
+				 state = 1;
+				TMR1=0;
+				}
+
+				break;
+			case(1):
+				PR1=7200;
+
+				if(PORTBbits.RB5 == 1){
+				state = 0;
+				TMR1=0;
+				}
+
+				break;
+		}
+
+
+
+
+
+
 		// Use the UART RX interrupt flag to wait until we recieve a character.
 		if(IFS0bits.U1RXIF == 1) {	
 
@@ -240,12 +268,15 @@ int main(void)
 				printf("Invalid LED Selection!\n\r");
 			}
 
+
 			// Clear the UART RX interrupt flag to we can detect the reception
 			// of another character.
 			IFS0bits.U1RXIF = 0;	
 
 			// Re-print the message requesting the user to select a LED to toggle.
 			printf("Select LED to Toggle (4-7): ");
+
+
 
 		}
 	}
@@ -277,3 +308,4 @@ void _ISR _T1Interrupt(void)
 }
 
 // ******************************************************************************************* //
+
