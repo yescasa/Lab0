@@ -99,6 +99,10 @@ int main(void)
 	TRISBbits.TRISB13 = 0;
 	TRISBbits.TRISB12 = 0;
 
+	LATBbits.LATB15 = 0;
+	LATBbits.LATB14 = 0;
+	LATBbits.LATB13 = 0;
+	LATBbits.LATB12 = 0;
 	// **TODO** SW1 of the 16-bit 28-pin Starter Board is connected to pin RB??. 
 	// Assign the TRISB bit for this pin to configure this port as an input.
 
@@ -205,10 +209,11 @@ int main(void)
 				// entered. We can do this by subtracting the value for 
 				// the character '0'.
 				ledToToggle = receivedChar - '0';
-
+				
 				// Print a confirmation message.
 				printf("Toggling LED%d\n\r", ledToToggle);
 			}
+
 			else {
 				// Display error message.
 				printf("Invalid LED Selection!\n\r");
@@ -220,6 +225,7 @@ int main(void)
 
 			// Re-print the message requesting the user to select a LED to toggle.
 			printf("Select LED to Toggle (4-7): ");
+
 		}
 	}
 
@@ -242,9 +248,11 @@ void _ISR _T1Interrupt(void)
 {
 	// Clear Timer 1 interrupt flag to allow another Timer 1 interrupt to occur.
 	IFS0bits.T1IF = 0;		
-	
+
 	// Toggle the LED Specified by the User.
 	LATB ^= ((0x1000)<<(7-ledToToggle));
+	
+	
 }
 
 // ******************************************************************************************* //
