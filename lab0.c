@@ -99,10 +99,11 @@ int main(void)
 	TRISBbits.TRISB13 = 0;
 	TRISBbits.TRISB12 = 0;
 
-	LATBbits.LATB15 = 0;
-	LATBbits.LATB14 = 0;
-	LATBbits.LATB13 = 0;
-	LATBbits.LATB12 = 0;
+	LATBbits.LATB15 = 1;
+	LATBbits.LATB14 = 1;	
+	LATBbits.LATB13 = 1;
+	LATBbits.LATB12 = 1;
+
 	// **TODO** SW1 of the 16-bit 28-pin Starter Board is connected to pin RB??. 
 	// Assign the TRISB bit for this pin to configure this port as an input.
 
@@ -189,8 +190,26 @@ int main(void)
 		// whenever the SW1 is continuously pressed, the currently selected LED 
 		// will blink twice as fast. When SW1 is released the LEDs will blink at 
 		// the initially defined rate.
-
-
+		if(receivedChar == '7'){
+			LATBbits.LATB15 = 1;
+			LATBbits.LATB14 = 1;
+			LATBbits.LATB13 = 1;
+		}
+		if(receivedChar == '6'){
+			LATBbits.LATB15 = 1;
+			LATBbits.LATB14 = 1;
+			LATBbits.LATB12 = 1;
+		}
+		if(receivedChar == '5'){
+			LATBbits.LATB15 = 1;
+			LATBbits.LATB12 = 1;
+			LATBbits.LATB13 = 1;
+		}
+		if(receivedChar == '4'){
+			LATBbits.LATB12 = 1;
+			LATBbits.LATB14 = 1;
+			LATBbits.LATB13 = 1;
+		}
 		// Use the UART RX interrupt flag to wait until we recieve a character.
 		if(IFS0bits.U1RXIF == 1) {	
 
